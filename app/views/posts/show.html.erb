@@ -1,0 +1,27 @@
+<h1><%= @post.title %></h1>
+<p>名前: <%= @post.name %></p>
+<p><%= @post.content %></p>
+<% if @post.image.attached? %>
+  <%= image_tag @post.image %>
+<% end %>
+
+<h2>コメント一覧</h2>
+<% @post.comments.each do |comment| %>
+   <% if comment.user == @post.user %> <!-- 投稿したユーザーのみ表示 -->
+  <div>
+    <strong><%= comment.user.email %></strong>
+    <p><%= comment.content %></p>
+  </div>
+<% end %>
+<% end %>
+<h2>コメントを追加</h2>
+<%= form_with(model: [ @post, Comment.new ]) do |form| %>
+  <div>
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+  <div>
+    <%= form.submit 'コメントを投稿' %>
+  </div>
+<% end %>
+<%= link_to '投稿一覧に戻る', posts_path %>
