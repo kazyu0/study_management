@@ -1,0 +1,6 @@
+<h1>Welcome to Study Management</h1>
+<% if user_signed_in? %>
+  <p>Hello, <%= current_user.email %>!</p>
+<% else %>
+  <p>Please <a href="<%= new_user_session_path %>">log in</a> or <a href="<%= new_user_registration_path %>">sign up</a>.</p>
+<% end %>
