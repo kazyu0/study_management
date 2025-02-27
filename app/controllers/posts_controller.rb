@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.includes(:user)
   end
 
   def new
@@ -10,9 +10,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(post_params)
+    @post = Post.new(post_params)
+    @post.user = current_user 
     if @post.save
-      redirect_to posts_path, notice: '投稿が成功しました。'
+      redirect_to posts_path, notice: '投稿が作成されました。'
     else
       render :new
     end

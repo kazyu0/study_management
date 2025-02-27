@@ -1,15 +1,14 @@
 <h1>投稿一覧</h1>
 
-<% @posts.each do |post| %>
-  <div>
-    <h2><%= post.title %></h2>
-    <p>名前: <%= post.name %></p>
-    <p><%= post.content %></p>
-    <% if post.image.attached? %>
-      <%= image_tag post.image %>
-    <% end %>
-    <hr>
-  </div>
-<% end % %>
+<%= link_to '新規投稿', new_post_path, class: 'btn btn-primary' %>
 
-<%= link_to '新規投稿', new_post_path %>
+<% @posts.each do |post| %>
+  <div class="post">
+    <h2><%= link_to post.title, post_path(post) %></h2>
+    <p>名前: <%= post.name %></p>
+    <p>投稿者: <%= post.user.email %></p>
+    <% if post.image.attached? %>
+      <%= image_tag post.image, size: "150x150" %>
+    <% end %>
+  </div>
+<% end %>
